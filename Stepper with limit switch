@@ -1,0 +1,60 @@
+#include <ezButton.h>
+   
+   
+const int dirPin = 2;
+const int stepPin = 3;
+const int stepsPerRevolution = 250;
+ezButton limitSwitch(7);
+ezButton limitSwitch2(8);
+
+void setup()
+{
+ 
+  pinMode(stepPin, OUTPUT);
+  pinMode(dirPin, OUTPUT);
+  limitSwitch.setDebounceTime(50);
+  limitSwitch2.setDebounceTime(50);
+  digitalWrite(dirPin, LOW);
+ 
+  for(int i=0; i< limitSwitch.isPressed() || limitSwitch2.isPressed(); i++)
+  {
+    digitalWrite(stepPin, HIGH);
+    delayMicroseconds(100);
+   
+  }
+}
+void loop()
+{
+  limitSwitch.loop();
+  limitSwitch2.loop();
+   
+  if(limitSwitch.isPressed())
+  {
+ 
+  digitalWrite(dirPin, LOW);
+ 
+    for(int x = 0; x < stepsPerRevolution; x++)
+    {
+    digitalWrite(stepPin, HIGH);
+    delayMicroseconds(1000);
+    digitalWrite(stepPin, LOW);
+    delayMicroseconds(1000);    
+    }
+  }
+   
+  if(limitSwitch2.isPressed())
+  {
+  digitalWrite(dirPin, HIGH);
+ 
+    for(int x = 0; x < stepsPerRevolution; x++)
+    {
+    digitalWrite(stepPin, HIGH);
+    delayMicroseconds(1000);
+    digitalWrite(stepPin, LOW);
+    delayMicroseconds(1000);
+    }
+  }
+ 
+   
+
+}
